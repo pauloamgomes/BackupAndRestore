@@ -48,7 +48,7 @@ When a user clicks the Backup button a new page will be open with the backup opt
 - Uploads: all the files and directories inside the uploads folder
 
 
-![Backup and Restore between 2 sites](https://monosnap.com/file/VVRa9IBXh8mL4G8W1edTXmDXfiggSz.png)
+![Backup and Restore between 2 sites](https://monosnap.com/file/Sngzezd9uGNDogT2WXKI7490pik1Xm.png)
 
 ### Creating a backup (REST API)
 
