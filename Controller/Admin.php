@@ -382,8 +382,11 @@ class Admin extends AuthController {
     }
 
     $method = 'restore' . ucfirst($operation);
-    $this->{$method}($zip, $zipHandle, $fullRestore);
+    if (!method_exists($this, $method)) {
+      return ['status' => 'danger', 'msg' => 'Invalid operation!'];
+    }
 
+    $this->{$method}($zip, $zipHandle, $fullRestore);
     $zip->close();
 
     return ['operation' => $operation, 'status' => 'success'];
@@ -694,8 +697,6 @@ class Admin extends AuthController {
       $this->app->helper('fs')->mkdir(dirname(COCKPIT_CONFIG_PATH));
     }
     $this->app->helper('fs')->write(COCKPIT_CONFIG_PATH, $config);
-    // Clear caches.
-    $this->module("cockpit")->clearCache();
   }
 
   /**
