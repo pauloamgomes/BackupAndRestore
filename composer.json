@@ -1,5 +1,5 @@
 {
-    "name": "pauloamgomes/Backup-and-Restore",
+    "name": "pauloamgomes/backupandrestore",
     "type": "project",
     "description": "Backup and Restore addon for Cockpit CMS.",
     "keywords": ["cms", "headless", "api", "cockpit", "backups"],
