@@ -48,7 +48,7 @@ When a user clicks the Backup button a new page will be open with the backup opt
 - Uploads: all the files and directories inside the uploads folder
 
 
-![Backup and Restore between 2 sites](https://monosnap.com/file/Sngzezd9uGNDogT2WXKI7490pik1Xm.png)
+![Backup and Restore between 2 sites](https://monosnap_files.s3.amazonaws.com/ms_113506/XSmtGDckjFGpOGJk2A1n9oTDi4Kz1B/cockpit-cms-backup-restore.gif?Signature=YfGGLUu3Q%2FmjXAMfAygEiqKztgk%3D&Expires=1537022773&AWSAccessKeyId=AKIAJG2SOFH45AI7FPOQ&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27cockpit-cms-backup-restore.gif&response-content-type=image/gif)
 
 ### Creating a backup (REST API)
 
@@ -58,13 +58,14 @@ It's possible to create a backup using the REST API, that can be useful for exam
 
 Triggering the backup only requires a request like below:
 
-![Backup using REST API](https://monosnap.com/file/VufnXlEbeIy0cgFgqKJMhJZI0PTkzO.png)
+![Backup using REST API](https://monosnap_files.s3.amazonaws.com/ms_113506/8GePgGic8Q7vCZ8Wq6Q6PcglAseImo/Cockpit-Backup-API.gif?Signature=WoZrZH0aHipA0FbN3BgA36hWIbU%3D&Expires=1537022851&AWSAccessKeyId=AKIAJG2SOFH45AI7FPOQ&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Cockpit-Backup-API.gif&response-content-type=image/gif)
+
 
 ### Restoring a backup
 
 Any valid backup file that is stored in the Cockpit backups folder can be restored using the UI, the process of restoring is similar to creating a backup:
 
-![Restore Example](https://monosnap.com/file/7f8IStPNtei2gXnoRuPJPAvATXEyFz.png)
+![Restore Example](https://monosnap_files.s3.amazonaws.com/ms_113506/5rVkijougc1KlPvnKNInGceWp8CvCK/Cockpit-BackupAndRestore.gif?Signature=w9oej77f7AWLwvVJC7%2FyR8ZgSTw%3D&Expires=1537022901&AWSAccessKeyId=AKIAJG2SOFH45AI7FPOQ&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Cockpit-BackupAndRestore.gif&response-content-type=image/gif)
 
 Backup files can be also uploaded and restored using the UI, just click on upload and select your backup, after uploading the file, it will be available on the backups list.
 
