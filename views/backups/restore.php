@@ -109,7 +109,7 @@
         this.options = [
           {'key': 'collections', 'label': 'Collections definitions', 'value': this.info.collections, 'enabled': this.info.collections},
           {'key': 'forms', 'label': 'Forms definitions', 'value': this.info.forms, 'enabled': this.info.forms},
-          {'key': 'regions', 'label': 'Regions definitions', 'value': this.info.regions, 'enabled': this.info.regions},
+          {'key': 'regions', 'label': 'Regions definitions (deprecated, ensure you have legacy addon installed)', 'value': this.info.regions, 'enabled': this.info.regions},
           {'key': 'accounts', 'label': 'User accounts', 'value': this.info.accounts, 'enabled': this.info.accounts},
           {'key': 'webhooks', 'label': 'Webhooks', 'value': this.info.webhooks, 'enabled': this.info.webhooks},
           {'key': 'uploads', 'label': 'File uploads', 'value': this.info.uploads, 'enabled': this.info.uploads},

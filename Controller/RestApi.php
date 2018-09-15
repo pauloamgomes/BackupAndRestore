@@ -34,6 +34,10 @@ class RestApi extends Controller {
         'value' => in_array($key, $requestOptions),
       ];
     }
+    // Remove deprecated regions if legacy addon is not enabled.
+    if (isset($options['regions']) && !$this->app->module('regions') instanceof Lime\Module) {
+      unset($options['regions']);
+    }
 
     return $this->app->module('backupandrestore')->saveBackup($description, $options);
   }

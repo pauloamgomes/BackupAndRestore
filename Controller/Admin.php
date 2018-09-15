@@ -12,15 +12,15 @@ use \Spyc;
 class Admin extends AuthController {
 
   protected $definitions = [
-    'collections',
-    'regions',
-    'forms',
-    'config',
-    'accounts',
-    'webhooks',
-    'entries',
-    'assets',
-    'uploads',
+    'collections' => 'collections',
+    'regions' => 'regions',
+    'forms' => 'forms',
+    'config' => 'config',
+    'accounts' => 'accounts',
+    'webhooks' => 'webhooks',
+    'entries' => 'entries',
+    'assets' => 'assets',
+    'uploads' => 'uploads',
   ];
 
   /**
@@ -154,7 +154,8 @@ class Admin extends AuthController {
     }
 
     $regions = [];
-    if ($info['backup']['regions']) {
+    // Regions are deprecated and supported only with legacy module.
+    if ($info['backup']['regions'] && $this->app->module('regions') instanceof Lime\Module) {
       $data = Spyc::YAMLLoad($zip->getFromName('regions.yaml', 0, ZipArchive::FL_NODIR));
       if ($data && isset($data['regions'])) {
         foreach ($data['regions'] as $region) {
@@ -238,7 +239,6 @@ class Admin extends AuthController {
       'config' => $config,
       'collections' => array_values($collections),
       'regions' => $regions,
-      'regions' => $regions,
       'forms' => $forms,
       'accounts' => $accounts,
       'webhooks' => $webhooks,
@@ -255,7 +255,13 @@ class Admin extends AuthController {
     if (!$this->app->module("cockpit")->hasaccess("BackupAndRestore", 'manage.create')) {
       return FALSE;
     }
-    return $this->render('backupandrestore:views/backups/create.php');
+
+    $definitions = $this->definitions;
+    if (!$this->app->module('regions') instanceof Lime\Module) {
+      unset($definitions['regions']);
+    }
+
+    return $this->render('backupandrestore:views/backups/create.php', ['definitions' => array_keys($definitions)]);
   }
 
   /**
@@ -298,6 +304,11 @@ class Admin extends AuthController {
     }
 
     $info = Spyc::YAMLLoad($zip->getFromName('backup.yaml', 0, ZipArchive::FL_NODIR));
+
+    // Regions are now depreacted and supported only by legacy addon.
+    if (!$this->app->module('regions') instanceof Lime\Module) {
+      $info['backup']['regions'] = FALSE;
+    }
 
     return $this->render('backupandrestore:views/backups/restore.php', [
       'info' => $info['backup'],

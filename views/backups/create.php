@@ -18,11 +18,13 @@
 
             <h3>@lang('Backup Options')</h3>
             <div ref="container" class="uk-form-row" each="{option, index in options}" onclick="{ setOption }" style="cursor:pointer;">
-                <div class="uk-form-switch">
-                    <input ref="check" type="checkbox" id="{ option.key }" checked={option.value} />
-                    <label for="{ option.key }"></label>
+                <div if="{!option.disabled}">
+                    <div class="uk-form-switch">
+                        <input ref="check" type="checkbox" id="{ option.key }" checked={option.value} />
+                        <label for="{ option.key }"></label>
+                    </div>
+                    <span>{ option.label }</span>
                 </div>
-                <span>{ option.label }</span>
             </div>
         </div>
 
@@ -41,17 +43,18 @@
         this.mixin(RiotBindMixin);
 
         this.description = "@lang('Manual backup created on') " + App.Utils.dateformat(new Date(), 'MMM DD, YYYY HH:mm');
+        this.definitions = {{ json_encode($definitions) }};
 
         this.options = [
-          {'key': 'config', 'label': 'Global cockpit configuration', 'value': true},
-          {'key': 'collections', 'label': 'Collections definitions', 'value': true},
-          {'key': 'forms', 'label': 'Forms definitions', 'value': true},
-          {'key': 'regions', 'label': 'Regions definitions', 'value': true},
-          {'key': 'accounts', 'label': 'User accounts', 'value': true},
-          {'key': 'webhooks', 'label': 'Webhooks definitions', 'value': true},
-          {'key': 'entries', 'label': 'Include collection entries', 'value': true},
-          {'key': 'assets', 'label': 'Assets', 'value': true},
-          {'key': 'uploads', 'label': 'File uploads', 'value': true}
+          {'key': 'config', 'label': 'Global cockpit configuration', 'value': true, 'disabled': false},
+          {'key': 'collections', 'label': 'Collections definitions', 'value': true, 'disabled': false},
+          {'key': 'forms', 'label': 'Forms definitions', 'value': true, 'disabled': false},
+          {'key': 'accounts', 'label': 'User accounts', 'value': true, 'disabled': false},
+          {'key': 'webhooks', 'label': 'Webhooks definitions', 'value': true, 'disabled': false},
+          {'key': 'entries', 'label': 'Include collection entries', 'value': true, 'disabled': false},
+          {'key': 'assets', 'label': 'Assets', 'value': true, 'disabled': false},
+          {'key': 'uploads', 'label': 'File uploads', 'value': true, 'disabled': false},
+          {'key': 'regions', 'label': 'Regions (deprecated, ensure you have the legacy regions addon installed', 'value': this.definitions.includes('regions'), 'disabled': true}
         ];
 
         this.on('mount', function(){

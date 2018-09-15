@@ -43,7 +43,7 @@ $this->module("backupandrestore")->extend([
     }
 
     // Save regions.
-    if ($settings['regions']) {
+    if ($settings['regions'] && $app->module('regions') instanceof Lime\Module) {
       $regions = $this->app->module('regions')->regions();
       $zip->addFromString('/data/regions.yaml', \Spyc::YAMLDump(['regions' => $regions], TRUE));
     }

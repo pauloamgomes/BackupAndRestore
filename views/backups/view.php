@@ -46,7 +46,7 @@
                         </span>
                     </td>
                 </tr>
-                <tr>
+                <tr if="{info.regions}">
                     <td>@lang('Regions')</td>
                     <td>
                         <div if="{ !info.regions }">@lang('No regions saved')</div>
