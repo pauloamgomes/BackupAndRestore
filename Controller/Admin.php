@@ -14,6 +14,7 @@ class Admin extends AuthController {
   protected $definitions = [
     'collections' => 'collections',
     'regions' => 'regions',
+    'singletons' => 'singletons',
     'forms' => 'forms',
     'config' => 'config',
     'accounts' => 'accounts',
@@ -155,11 +156,22 @@ class Admin extends AuthController {
 
     $regions = [];
     // Regions are deprecated and supported only with legacy module.
-    if ($info['backup']['regions'] && $this->app->module('regions') instanceof Lime\Module) {
+    if (isset($info['backup']['regions']) && $info['backup']['regions'] && $this->app->module('regions') instanceof Lime\Module) {
       $data = Spyc::YAMLLoad($zip->getFromName('regions.yaml', 0, ZipArchive::FL_NODIR));
       if ($data && isset($data['regions'])) {
         foreach ($data['regions'] as $region) {
           $regions[] = !empty($region['label']) ? $region['label'] : $region['name'];
+        }
+      }
+    }
+
+    $singletons = [];
+    // Singletons are a replace to regions and therefore not present in old backups.
+    if (isset($info['backup']['singletons']) && $info['backup']['singletons']) {
+      $data = Spyc::YAMLLoad($zip->getFromName('singletons.yaml', 0, ZipArchive::FL_NODIR));
+      if ($data && isset($data['singletons'])) {
+        foreach ($data['singletons'] as $singleton) {
+          $singletons[] = !empty($singleton['label']) ? $singleton['label'] : $singleton['name'];
         }
       }
     }
@@ -239,6 +251,7 @@ class Admin extends AuthController {
       'config' => $config,
       'collections' => array_values($collections),
       'regions' => $regions,
+      'singletons' => $singletons,
       'forms' => $forms,
       'accounts' => $accounts,
       'webhooks' => $webhooks,
@@ -463,8 +476,41 @@ class Admin extends AuthController {
         if ($fullRestore || !isset($regions[$name])) {
           $this->module("regions")->createRegion($name, $region);
         }
-        elseif (isset($collections[$name])) {
+        elseif (isset($regions[$name])) {
           $this->module("regions")->updateRegion($name, $region);
+        }
+      }
+    }
+  }
+
+  /**
+   * Restore a set of singletons from a backup zip file.
+   *
+   * @param object $zip
+   *   The ZipArchive object that contains the backup.
+   * @param resource $zipHandle
+   *   A Zip Handler.
+   * @param bool $fullRestore
+   *   Flag to define if its a full or partial restore.
+   */
+  protected function restoreSingletons($zip, $zipHandle, $fullRestore) {
+    $data = Spyc::YAMLLoad($zip->getFromName('singletons.yaml', 0, ZipArchive::FL_NODIR));
+    $singletons = $this->module('singletons')->singletons();
+
+    if ($data && isset($data['singletons'])) {
+      if ($fullRestore && !empty($singletons)) {
+        foreach ($singletons as $singleton) {
+          $this->module('singletons')->removeSingleton($singleton['name']);
+        }
+      }
+
+      foreach ($data['singletons'] as $singleton) {
+        $name = $singleton['name'];
+        if ($fullRestore || !isset($singletons[$name])) {
+          $this->module("singletons")->createSingleton($name, $singleton);
+        }
+        elseif (isset($singletons[$name])) {
+          $this->module("singletons")->updateSingleton($name, $singleton);
         }
       }
     }

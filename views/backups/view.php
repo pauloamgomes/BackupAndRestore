@@ -46,6 +46,15 @@
                         </span>
                     </td>
                 </tr>
+                <tr>
+                    <td>@lang('Singletons')</td>
+                    <td>
+                        <div if="{ !info.singletons }">@lang('No singletons saved')</div>
+                        <span class="uk-badge uk-margin-small-left" each="{ singleton in singletons }" if="{ info.singletons && singletons.length }">
+                            { singleton }
+                        </span>
+                    </td>
+                </tr>
                 <tr if="{info.regions}">
                     <td>@lang('Regions')</td>
                     <td>
@@ -148,6 +157,7 @@
         this.info = {{ json_encode($info) }};
         this.config = {{ json_encode($config) }};
         this.collections = {{ json_encode($collections) }};
+        this.singletons = {{ json_encode($singletons) }};
         this.regions = {{ json_encode($regions) }};
         this.forms = {{ json_encode($forms) }};
         this.accounts = {{ json_encode($accounts) }};

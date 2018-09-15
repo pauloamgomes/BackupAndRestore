@@ -48,6 +48,12 @@ $this->module("backupandrestore")->extend([
       $zip->addFromString('/data/regions.yaml', \Spyc::YAMLDump(['regions' => $regions], TRUE));
     }
 
+    // Save singletons.
+    if ($settings['singletons']) {
+      $singletons = $this->app->module('singletons')->singletons();
+      $zip->addFromString('/data/singletons.yaml', \Spyc::YAMLDump(['singletons' => $singletons], TRUE));
+    }
+
     // Save forms.
     if ($settings['forms']) {
       $forms = $this->app->module('forms')->forms();

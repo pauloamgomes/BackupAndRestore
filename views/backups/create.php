@@ -48,6 +48,7 @@
         this.options = [
           {'key': 'config', 'label': 'Global cockpit configuration', 'value': true, 'disabled': false},
           {'key': 'collections', 'label': 'Collections definitions', 'value': true, 'disabled': false},
+          {'key': 'singletons', 'label': 'Singletons definitions', 'value': true, 'disabled': false},
           {'key': 'forms', 'label': 'Forms definitions', 'value': true, 'disabled': false},
           {'key': 'accounts', 'label': 'User accounts', 'value': true, 'disabled': false},
           {'key': 'webhooks', 'label': 'Webhooks definitions', 'value': true, 'disabled': false},
