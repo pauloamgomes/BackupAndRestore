@@ -29,8 +29,6 @@
 
         this.on('mount', function(){
 
-            console.log(this.backupsPath);
-
             App.assets.require(['/assets/lib/uikit/js/components/upload.js'], function() {
 
                 var uploadSettings = {

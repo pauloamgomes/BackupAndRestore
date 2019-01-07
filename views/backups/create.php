@@ -76,7 +76,7 @@
                 $this.backup = data;
                 App.ui.notify("Backup created", "success");
                 setTimeout(function() {
-                  location.href = '/backup-and-restore';
+                  location.href = App.route('/backup-and-restore');
                 }, 1000)
             });
 

@@ -70,7 +70,7 @@
         <tbody>
             <tr each="{backup, $index in backups}" if="{ infilter(backup) }">
                 <td>
-                    <a class="uk-link-muted uk-text-small" href="@route('/backup-and-restore/view')/{ backup.filename }" title="@lang('View details')">
+                    <a class="uk-link-muted uk-text-small" href="@route('/backup-and-restore/view')/{ backup.name }" title="@lang('View details')">
                         { backup.filename }
                     </a>
                 </td>
@@ -92,9 +92,9 @@
                         <div class="uk-dropdown">
                             <ul class="uk-nav uk-nav-dropdown uk-dropdown-close">
                                 <li class="uk-nav-header">@lang('Actions')</li>
-                                <li><a href="@route('/backup-and-restore/view')/{ backup.filename }">@lang('View')</a></li>
+                                <li><a href="@route('/backup-and-restore/view')/{ backup.name }">@lang('View')</a></li>
                                 @if($app->module('cockpit')->hasaccess('BackupAndRestore', 'manage.restore'))
-                                <li><a href="@route('/backup-and-restore/restore')/{ backup.filename }">@lang('Restore')</a></li>
+                                <li><a href="@route('/backup-and-restore/restore')/{ backup.name }">@lang('Restore')</a></li>
                                 @endif
                                 @if($app->module('cockpit')->hasaccess('BackupAndRestore', 'manage.download'))
                                 <li><a onclick="{ parent.download }">@lang('Download')</a></li>
@@ -202,7 +202,7 @@
         remove(evt) {
             var backup = evt.item.backup;
             App.ui.confirm("Are you sure?", function() {
-                App.request('/backup-and-restore/delete/' + backup.filename).then(function(data){
+                App.request('/backup-and-restore/delete/' + backup.name).then(function(data){
                     App.ui.notify("Backup removed", "success");
                     $this.backups.splice(evt.item.$index, 1);
                     $this.update();
@@ -299,7 +299,7 @@
             e.stopPropagation();
             item = e.item.backup;
 
-            window.open(App.route('/backup-and-restore/download/' + item.filename));
+            window.open(App.route('/backup-and-restore/download/' + item.name));
         }
 
     </script>

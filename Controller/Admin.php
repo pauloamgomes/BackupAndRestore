@@ -79,6 +79,7 @@ class Admin extends AuthController {
         }
 
         $backups[] = [
+          'name' => str_replace('.zip', '', $path->getFilename()),
           'filename' => $path->getFilename(),
           'created' => $data['backup']['created'],
           'description' => $data['backup']['description'],
@@ -120,7 +121,7 @@ class Admin extends AuthController {
       return FALSE;
     }
 
-    $backupFile = $this->app->path('#storage:') . '/backups/' . $backup;
+    $backupFile = $this->app->path('#storage:') . '/backups/' . $backup . '.zip';
 
     if (!is_file($backupFile)) {
       return FALSE;
@@ -247,7 +248,8 @@ class Admin extends AuthController {
 
     return $this->render('backupandrestore:views/backups/view.php', [
       'info' => $info['backup'],
-      'filename' => $backup,
+      'name' => $backup,
+      'filename' => $backup . '.zip',
       'config' => $config,
       'collections' => array_values($collections),
       'regions' => $regions,
@@ -304,7 +306,7 @@ class Admin extends AuthController {
       return FALSE;
     }
 
-    $backupFile = $this->app->path('#storage:') . '/backups/' . $backup;
+    $backupFile = $this->app->path('#storage:') . '/backups/' . $backup . '.zip';
 
     if (!is_file($backupFile)) {
       return FALSE;
@@ -325,7 +327,8 @@ class Admin extends AuthController {
 
     return $this->render('backupandrestore:views/backups/restore.php', [
       'info' => $info['backup'],
-      'backup' => $backup,
+      'name' => $backup,
+      'backup' => $backup . '.zip',
     ]);
   }
 
@@ -337,7 +340,7 @@ class Admin extends AuthController {
       return FALSE;
     }
 
-    $file = $this->app->path('#storage:') . '/backups/' . trim($backup, '/');
+    $file = $this->app->path('#storage:') . '/backups/' . trim($backup, '/') . '.zip';
 
     if (!$backup && !file_exists($file)) {
       $this->app->stop();
@@ -355,7 +358,7 @@ class Admin extends AuthController {
       $this->app->stop();
     }
 
-    $file = $this->app->path('#storage:') . '/backups/' . trim($backup, '/');
+    $file = $this->app->path('#storage:') . '/backups/' . trim($backup, '/') . '.zip';
 
     if (!$backup && !file_exists($file)) {
       $this->app->stop();

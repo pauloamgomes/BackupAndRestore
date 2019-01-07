@@ -153,6 +153,7 @@
         var $this = this;
 
         this.showConfig = false;
+        this.name = {{ json_encode($name) }};
         this.filename = {{ json_encode($filename) }};
         this.info = {{ json_encode($info) }};
         this.config = {{ json_encode($config) }};
@@ -169,7 +170,7 @@
         download(e) {
             e.stopPropagation();
 
-            window.open(App.route('/backup-and-restore/download/' + this.filename));
+            window.open(App.route('/backup-and-restore/download/' + this.name));
         }
 
         toggleConfig(status) {
@@ -178,10 +179,10 @@
 
         remove(e) {
             App.ui.confirm("Are you sure?", function() {
-                App.request('/backup-and-restore/delete/' + $this.filename).then(function(data) {
+                App.request('/backup-and-restore/delete/' + $this.name).then(function(data) {
                     App.ui.notify("Entry removed", "success");
                     setTimeout(function() {
-                        location.href = '/backup-and-restore';
+                        location.href = App.route('/backup-and-restore');
                     }, 1000)
                 });
             }.bind(this));
