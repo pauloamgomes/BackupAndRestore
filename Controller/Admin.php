@@ -374,6 +374,7 @@ class Admin extends AuthController {
     header("Content-Disposition: attachment; filename=\"" . $pathinfo["basename"] . "\";");
     header("Content-Transfer-Encoding: binary");
     header("Content-Length: " . filesize($file));
+    ob_clean();
     readfile($file);
 
     $this->app->stop();
