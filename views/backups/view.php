@@ -132,7 +132,7 @@
         <ul class="uk-nav">
             <li class="uk-nav-header">@lang('Actions')</li>
             <li>
-                <a class="uk-button uk-button-small uk-button-primary" href="@route('/backup-and-restore/restore/{ filename }')"><i class="uk-icon-refresh"></i> @lang('Restore')</a>
+                <a class="uk-button uk-button-small uk-button-primary" href="@route('/backup-and-restore/restore/{ name }')"><i class="uk-icon-refresh"></i> @lang('Restore')</a>
             </li>
             <li class="uk-nav-divider"></li>
             <li>
