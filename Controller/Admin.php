@@ -512,6 +512,7 @@ class Admin extends AuthController {
         $name = $singleton['name'];
         if ($fullRestore || !isset($singletons[$name])) {
           $this->module("singletons")->createSingleton($name, $singleton);
+          $this->module("singletons")->updateSingleton($name, $singleton);
         }
         elseif (isset($singletons[$name])) {
           $this->module("singletons")->updateSingleton($name, $singleton);
