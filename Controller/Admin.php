@@ -668,9 +668,9 @@ class Admin extends AuthController {
                 if (!isset($entry[$field['name']])) {
                   continue;
                 }
-                foreach ($entry[$field['name']] as $idx => $value) {
+                foreach ($entry as $idx => $value) {
                   if (isset($value['_id']) && isset($idsMapping[$value['_id']])) {
-                    $entry[$field['name']][$idx]['_id'] = $idsMapping[$value['_id']];
+                    $entry[$field['name']]['_id'] = $idsMapping[$value['_id']];
                     $this->module('collections')->save($collection['name'], [$entry]);
                   }
                 }
