@@ -11,6 +11,7 @@ class RestApi extends Controller {
 
   protected $options = [
     'collections' => ['key' => 'collections', 'value' => TRUE],
+    'singletons' => ['key' => 'singletons', 'value' => TRUE],
     'regions' => ['key' => 'regions', 'value' => TRUE],
     'forms' => ['key' => 'forms', 'value' => TRUE],
     'config' => ['key' => 'config', 'value' => TRUE],

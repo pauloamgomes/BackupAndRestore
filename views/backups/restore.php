@@ -108,12 +108,13 @@
 
         this.options = [
           {'key': 'collections', 'label': 'Collections definitions', 'value': this.info.collections, 'enabled': this.info.collections},
+          {'key': 'singletons', 'label': 'Singletons definitions', 'value': this.info.singletons, 'enabled': this.info.singletons},
           {'key': 'forms', 'label': 'Forms definitions', 'value': this.info.forms, 'enabled': this.info.forms},
           {'key': 'regions', 'label': 'Regions definitions (deprecated, ensure you have legacy addon installed)', 'value': this.info.regions, 'enabled': this.info.regions},
           {'key': 'accounts', 'label': 'User accounts', 'value': this.info.accounts, 'enabled': this.info.accounts},
           {'key': 'webhooks', 'label': 'Webhooks', 'value': this.info.webhooks, 'enabled': this.info.webhooks},
           {'key': 'uploads', 'label': 'File uploads', 'value': this.info.uploads, 'enabled': this.info.uploads},
-          {'key': 'entries', 'label': 'Include saved entries (collections, forms)', 'value': this.info.entries, 'enabled': this.info.entries},
+          {'key': 'entries', 'label': 'Include saved entries (collections, forms, singletons)', 'value': this.info.entries, 'enabled': this.info.entries},
           {'key': 'assets', 'label': 'Include saved assets', 'value': this.info.assets, 'enabled': this.info.assets},
           {'key': 'config', 'label': 'Global cockpit configuration', 'value': this.info.config, 'enabled': this.info.config}
         ];
@@ -199,10 +200,10 @@
                 this.options[idx].value = !this.options[idx].value;
             }
             if (this.options[idx].key == 'uploads' && !this.options[idx].value) {
-                this.options[7].value = false;
+                this.options[8].value = false;
             }
-            if (this.options[idx].key == 'collections' && !this.options[idx].value) {
-                this.options[6].value = false;
+            if ((this.options[idx].key == 'collections' || this.options[idx].key == 'singletons') && !this.options[idx].value) {
+                this.options[7].value = false;
             }
         }
 

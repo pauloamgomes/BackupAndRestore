@@ -626,6 +626,21 @@ class Admin extends AuthController {
    *   Flag to define if its a full or partial restore.
    */
   protected function restoreEntries($zip, $zipHandle, $fullRestore) {
+    $this->restoreCollectionEntries($zip, $zipHandle, $fullRestore);
+    $this->restoreSingletonEntries($zip, $zipHandle, $fullRestore);
+  }
+
+  /**
+   * Restore a set of collection entries from a backup zip file.
+   *
+   * @param object $zip
+   *   The ZipArchive object that contains the backup.
+   * @param resource $zipHandle
+   *   A Zip Handler.
+   * @param bool $fullRestore
+   *   Flag to define if its a full or partial restore.
+   */
+  protected function restoreCollectionEntries($zip, $zipHandle, $fullRestore) {
     $data = Spyc::YAMLLoad($zip->getFromName('collections.yaml', 0, ZipArchive::FL_NODIR));
     $collections = $this->module('collections')->collections();
     if ($data && isset($data['collections'])) {
@@ -667,9 +682,9 @@ class Admin extends AuthController {
                 if (!isset($entry[$field['name']])) {
                   continue;
                 }
-                foreach ($entry[$field['name']] as $idx => $value) {
+                foreach ($entry as $idx => $value) {
                   if (isset($value['_id']) && isset($idsMapping[$value['_id']])) {
-                    $entry[$field['name']][$idx]['_id'] = $idsMapping[$value['_id']];
+                    $entry[$field['name']]['_id'] = $idsMapping[$value['_id']];
                     $this->module('collections')->save($collection['name'], [$entry]);
                   }
                 }
@@ -677,6 +692,34 @@ class Admin extends AuthController {
               break;
           }
         }
+      }
+    }
+  }
+
+  /**
+   * Restore a set of singleton entries from a backup zip file.
+   *
+   * @param object $zip
+   *   The ZipArchive object that contains the backup.
+   * @param resource $zipHandle
+   *   A Zip Handler.
+   * @param bool $fullRestore
+   *   Flag to define if its a full or partial restore.
+   */
+  protected function restoreSingletonEntries($zip, $zipHandle, $fullRestore) {
+    $data = Spyc::YAMLLoad($zip->getFromName('singletons.yaml', 0, ZipArchive::FL_NODIR));
+    $singletons = $this->module('singletons')->singletons();
+    if ($data && isset($data['singletons'])) {
+      if ($fullRestore) {
+        foreach ($singletons as $singleton) {
+          $this->module('singletons')->remove($singleton['name'], []);
+        }
+      }
+
+      foreach ($data['singletons'] as $singleton) {
+        $json = $zip->getFromName('singleton.' . $singleton['name'] . '.json', 0, ZipArchive::FL_NODIR);
+        $entry = json_decode($json, TRUE);
+        $res = $this->module('singletons')->saveData($singleton['name'], $entry);
       }
     }
   }

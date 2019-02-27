@@ -82,6 +82,10 @@ $this->module("backupandrestore")->extend([
         $json = json_encode($this->app->module('forms')->find($form['name']), JSON_PRETTY_PRINT);
         $zip->addFromString('/data/form.' . $form['name'] . '.json', $json);
       }
+      foreach ($singletons as $singleton) {
+        $json = json_encode($this->app->module('singletons')->getData($singleton['name']), JSON_PRETTY_PRINT);
+        $zip->addFromString('/data/singleton.' . $singleton['name'] . '.json', $json);
+      }
     }
 
     // Save assets.
