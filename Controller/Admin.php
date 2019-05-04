@@ -663,20 +663,27 @@ class Admin extends AuthController {
           switch ($field['type']) {
             case 'multiplecollectionlink':
             case 'collectionlink':
-              foreach ($entries as $entry) {
+              foreach ($entries as &$entry) {
                 if (!isset($entry[$field['name']])) {
                   continue;
                 }
                 foreach ($entry[$field['name']] as $idx => $value) {
-                  if (isset($value['_id']) && isset($idsMapping[$value['_id']])) {
-                    $entry[$field['name']][$idx]['_id'] = $idsMapping[$value['_id']];
-                    $this->module('collections')->save($collection['name'], [$entry]);
+                  if (is_array($value)) {
+                    if (isset($value['_id']) && isset($idsMapping[$value['_id']])) {
+                      $entry[$field['name']][$idx]['_id'] = $idsMapping[$value['_id']];
+                    }
+                  } else {
+                    if (isset($idsMapping[$value])) {
+                      $entry[$field['name']]['_id'] = $idsMapping[$value];
+                    }
                   }
                 }
               }
+              unset($entry);
               break;
           }
         }
+        $this->module('collections')->save($collection['name'], $entries);
       }
     }
   }
