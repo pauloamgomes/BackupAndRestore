@@ -668,12 +668,18 @@ class Admin extends AuthController {
                   continue;
                 }
                 foreach ($entry[$field['name']] as $idx => $value) {
-                  if (isset($value['_id']) && isset($idsMapping[$value['_id']])) {
-                    $entry[$field['name']][$idx]['_id'] = $idsMapping[$value['_id']];
+                  if (is_array($value)) {
+                    if (isset($value['_id']) && isset($idsMapping[$value['_id']])) {
+                      $entry[$field['name']][$idx]['_id'] = $idsMapping[$value['_id']];
+                    }
+                  } else {
+                    if (isset($idsMapping[$value])) {
+                      $entry[$field['name']]['_id'] = $idsMapping[$value];
+                    }
                   }
                 }
               }
-              unset($entries);
+              unset($entry);
               break;
           }
         }
