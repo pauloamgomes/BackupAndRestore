@@ -579,7 +579,7 @@ class Admin extends AuthController {
       }
 
       foreach ($data['accounts'] as $account) {
-        if ($account['user'] && $account['_id'] !== $current) {
+        if ($account['user'] && $account['_id'] !== $current && $account['name'] !== $this->user['name']) {
           if ($fullRestore || !$this->app->storage->findOne("cockpit/accounts", ["_id" => $account['_id']])) {
             $this->app->storage->insert("cockpit/accounts", $account);
           }
